@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FocusBlocker</string>
+    <string name="usage_access_permission">Usage Access Permission</string>
+    <string name="overlay_permission">Display Over Other Apps Permission</string>
+    <string name="notification_permission">Notification Permission</string>
+    <string name="granted">Granted</string>
+    <string name="not_granted">Not Granted</string>
+    <string name="grant_permission">Grant</string>
+    <string name="block_start_time">Block Start Time</string>
+    <string name="start_blocking">Start Blocking</string>
+    <string name="stop_blocking">Stop Blocking</string>
+    <string name="select_apps">Select Apps to Block</string>
+    <string name="select_all_games">Select All Games</string>
+    <string name="save_selection">Save Selection</string>
+    <string name="app_blocked_title">Focus Time!</string>
+    <string name="app_blocked_message">This app is currently blocked by FocusBlocker to help you stay focused.</string>
+    <string name="go_home">Go Home</string>
+    <string name="revoke_block">Revoke Block (Temporary Pause)</string>
+    <string name="confirm_revoke">Confirm Pause</string>
+    <string name="revoke_status_none">No active pause (Blocking is active)</string>
+</resources>
