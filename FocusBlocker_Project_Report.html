@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FocusBlocker - In-Depth Technical Project Report</title>
+<style>
+    @page {
+        size: A4;
+        margin: 20mm 15mm 20mm 15mm;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        color: #212529;
+        line-height: 1.6;
+        font-size: 11pt;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+    h1, h2, h3, h4 {
+        color: #0d47a1;
+        font-weight: 700;
+    }
+    h1 {
+        font-size: 26pt;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+    h2 {
+        font-size: 18pt;
+        border-bottom: 2px solid #1976d2;
+        padding-bottom: 6px;
+        margin-top: 28px;
+        page-break-after: avoid;
+    }
+    h3 {
+        font-size: 13pt;
+        color: #1565c0;
+        margin-top: 18px;
+        page-break-after: avoid;
+    }
+    p, li {
+        text-align: justify;
+    }
+    .cover-page {
+        text-align: center;
+        padding: 80px 20px 40px 20px;
+        page-break-after: always;
+    }
+    .cover-title {
+        font-size: 32pt;
+        color: #0d47a1;
+        margin-bottom: 12px;
+        font-weight: 800;
+    }
+    .cover-subtitle {
+        font-size: 16pt;
+        color: #455a64;
+        margin-bottom: 40px;
+        font-weight: 500;
+    }
+    .badge {
+        display: inline-block;
+        padding: 6px 14px;
+        background-color: #e3f2fd;
+        color: #1565c0;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 11pt;
+        margin: 4px;
+    }
+    .cover-meta {
+        margin-top: 80px;
+        font-size: 12pt;
+        color: #37474f;
+    }
+    .cover-meta p {
+        text-align: center;
+        margin: 6px 0;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+    .callout {
+        background-color: #f0f7ff;
+        border-left: 5px solid #1976d2;
+        padding: 14px 18px;
+        margin: 16px 0;
+        border-radius: 0 8px 8px 0;
+    }
+    .callout-warning {
+        background-color: #fff8e1;
+        border-left: 5px solid #ffa000;
+    }
+    .callout-success {
+        background-color: #e8f5e9;
+        border-left: 5px solid #388e3c;
+    }
+    .callout-title {
+        font-weight: bold;
+        font-size: 11pt;
+        margin-bottom: 4px;
+        color: #0d47a1;
+    }
+    .callout-warning .callout-title {
+        color: #e65100;
+    }
+    .callout-success .callout-title {
+        color: #1b5e20;
+    }
+    pre {
+        background-color: #212529;
+        color: #f8f9fa;
+        padding: 14px;
+        border-radius: 6px;
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 9.5pt;
+        overflow-x: auto;
+        line-height: 1.45;
+        page-break-inside: avoid;
+    }
+    code {
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 10pt;
+        background-color: #f1f3f5;
+        color: #c7254e;
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
+    pre code {
+        background-color: transparent;
+        color: inherit;
+        padding: 0;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 10pt;
+        page-break-inside: avoid;
+    }
+    th, td {
+        border: 1px solid #dee2e6;
+        padding: 10px 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #e3f2fd;
+        color: #0d47a1;
+        font-weight: 700;
+    }
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    .ascii-box {
+        background-color: #f8f9fa;
+        border: 1px dashed #90caf9;
+        padding: 12px;
+        font-family: monospace;
+        font-size: 9.5pt;
+        line-height: 1.25;
+        white-space: pre;
+        color: #1565c0;
+        border-radius: 6px;
+        page-break-inside: avoid;
+    }
+    .footer-note {
+        font-size: 9pt;
+        color: #757575;
+        text-align: center;
+        margin-top: 30px;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+    <div style="font-size: 48pt; margin-bottom: 20px;">🛡️</div>
+    <div class="cover-title">FocusBlocker</div>
+    <div class="cover-subtitle">Intelligent App Restriction & Distraction Mitigation System for Android</div>
+    
+    <div>
+        <span class="badge">Pure Java</span>
+        <span class="badge">Android SDK API 26–34</span>
+        <span class="badge">Foreground Service</span>
+        <span class="badge">UsageStatsManager</span>
+        <span class="badge">Material Design</span>
+    </div>
+
+    <div class="cover-meta">
+        <p><strong>Comprehensive Technical Architecture & Code Report</strong></p>
+        <p><strong>Author / Developer:</strong> anshu2k24 (mail2panshu@gmail.com)</p>
+        <p><strong>Project Repository:</strong> https://github.com/anshu2k24/FocusBlocker</p>
+        <p><strong>Package Name:</strong> <code>com.example.focusblocker</code></p>
+        <p><strong>Target SDK:</strong> Android 14 (API 34) | <strong>Minimum SDK:</strong> Android 8.0 (API 26)</p>
+        <p><strong>Date:</strong> November 2026</p>
+    </div>
+</div>
+
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<h2>1. Executive Summary & Problem Statement</h2>
+<p>
+Modern mobile operating systems provide constant notifications and high-dopamine triggers from social media platforms (such as Instagram and Facebook) and hyper-engaging video games. For students and working professionals, this leads to fragmentation of focus, reduced study throughput, and chronic procrastination.
+</p>
+<p>
+<strong>FocusBlocker</strong> is an autonomous, native Android application engineered to enforce distraction-free focus intervals. It enables users to select specific distracting apps or games and designate a scheduled focus start time. When the scheduled focus hour arrives, the application actively monitors device usage in the background and intercepts restricted apps in real time by displaying an unskippable full-screen barrier. To allow flexibility for urgent communications or brief relaxation, the system incorporates an integrated <strong>temporary revoke (pause) protocol</strong> allowing access for 5, 10, 15, or up to 30 minutes, after which enforcement automatically resumes.
+</p>
+
+<div class="callout callout-success">
+    <div class="callout-title">Key Engineering Principles</div>
+    <ul>
+        <li><strong>No Root Required:</strong> Operates entirely through sanctioned, modern Android framework APIs (<code>UsageStatsManager</code> and <code>AppOpsManager</code>).</li>
+        <li><strong>Zero Battery Bloat:</strong> Utilizes a lean 1-second scheduled task, screen-state gating via <code>PowerManager.isInteractive()</code>, and minimal memory overhead.</li>
+        <li><strong>Crash-Resilient & Sticky:</strong> Registered as an Android 14 compliant Foreground Service with type <code>specialUse</code> and automatically survives device reboots via a static <code>BOOT_COMPLETED</code> BroadcastReceiver.</li>
+    </ul>
+</div>
+
+<!-- SECTION 2: SYSTEM ARCHITECTURE -->
+<h2>2. System Architecture & Component Interaction</h2>
+<p>
+FocusBlocker is constructed according to the canonical Android Component Model. The architecture strictly separates user presentation, persistent state storage, background monitoring, and system broadcast event handling.
+</p>
+
+<div class="ascii-box">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             USER INTERACTION LAYER                          │
+├──────────────────────────┬──────────────────────────┬───────────────────────┤
+│       MainActivity       │    AppSelectActivity     │     BlockActivity     │
+│  - Permission Check UI   │  - Background App Query  │  - Full-screen barrier│
+│  - 12h AM/PM TimePicker  │  - Game Category Filter  │  - Intercept Back key │
+│  - Live Status & Timers  │  - Checkbox Persistence  │  - Temporary Revoke   │
+└────────────┬─────────────┴────────────┬─────────────┴───────────▲───────────┘
+             │                          │                         │ Launched via
+             ▼                          ▼                         │ Intent Flag
+┌─────────────────────────────────────────────────────────┐       │ NEW_TASK
+│               DATA PERSISTENCE LAYER                    │       │
+│                  PrefsHelper.java                       │       │
+│  - is_blocking_enabled (boolean)                        │       │
+│  - start_hour / start_minute (int)                      │       │
+│  - blocked_packages (Set&lt;String&gt;)                       │       │
+│  - revoke_until (long timestamp in ms)                  │       │
+└────────────────────────────┬────────────────────────────┘       │
+                             │ Reads Preferences                  │
+                             ▼                                    │
+┌─────────────────────────────────────────────────────────┐       │
+│               BACKGROUND EXECUTION LAYER                │       │
+│                      BlockService                       │───────┘
+│  - Foreground Service with Persistent Notification      │
+│  - Android 14 type: foregroundServiceType="specialUse"  │
+│  - 1-Second Scheduled Loop (UsageStatsManager)          │
+│  - Persistent Foreground Package Tracking               │
+└────────────────────────────▲────────────────────────────┘
+                             │ Restarts on Reboot
+┌────────────────────────────┴────────────────────────────┐
+│                    BootReceiver                         │
+│  - BroadcastReceiver (android.intent.action.BOOT_COMPLETED)
+└─────────────────────────────────────────────────────────┘
+</div>
+
+<!-- SECTION 3: DEEP DIVE INTO COMPONENTS -->
+<div class="page-break"></div>
+<h2>3. Detailed Source Code Walkthrough</h2>
+
+<h3>3.1 Persistence Abstraction: <code>PrefsHelper.java</code></h3>
+<p>
+All persistent state is stored in Android's private internal storage under <code>/data/data/com.example.focusblocker/shared_prefs/focus_blocker_prefs.xml</code>. <code>PrefsHelper</code> encapsulates all CRUD operations to provide thread-safe, defensive data access.
+</p>
+
+<div class="callout">
+    <div class="callout-title">Defensive Copying in SharedPreferences</div>
+    <p>
+    When retrieving a <code>Set&lt;String&gt;</code> from SharedPreferences via <code>getStringSet()</code>, Android returns an internal reference. Directly modifying that set leads to silent data corruption. <code>PrefsHelper.getBlockedPackages()</code> guarantees safety by creating an independent clone: <code>return new HashSet&lt;&gt;(set);</code>.
+    </p>
+</div>
+
+<pre><code>// Dynamic default to current system clock:
+public static int getStartHour(Context context) {
+    Calendar now = Calendar.getInstance();
+    return getPrefs(context).getInt(KEY_START_HOUR, now.get(Calendar.HOUR_OF_DAY));
+}
+
+public static int getStartMinute(Context context) {
+    Calendar now = Calendar.getInstance();
+    return getPrefs(context).getInt(KEY_START_MINUTE, now.get(Calendar.MINUTE));
+}
+
+public static void setStartTime(Context context, int hour, int minute) {
+    getPrefs(context).edit()
+            .putInt(KEY_START_HOUR, hour)
+            .putInt(KEY_START_MINUTE, minute)
+            .apply();
+}</code></pre>
+
+<h3>3.2 Application Controller: <code>MainActivity.java</code></h3>
+<p>
+<code>MainActivity</code> serves as the primary configuration dashboard. It handles three distinct responsibilities:
+</p>
+<ol>
+    <li>
+        <strong>Dynamic Permission Auditing:</strong> Checks both <em>Usage Access</em> (via <code>AppOpsManager</code>) and <em>System Alert Window</em> (via <code>Settings.canDrawOverlays</code>). Crucially, this audit is performed inside <code>onResume()</code>, ensuring that whenever a user returns from Android Settings, the status badges update to "Granted" immediately.
+    </li>
+    <li>
+        <strong>12-Hour AM/PM TimePicker with Real-Time Listener:</strong> Configured with <code>timePickerStart.setIs24HourView(false)</code> to prevent military 24-hour confusion. An attached <code>OnTimeChangedListener</code> immediately writes any adjustment to <code>PrefsHelper</code>, allowing the running background service to register time adjustments without stopping or restarting.
+    </li>
+    <li>
+        <strong>Live Countdown Timer:</strong> Employs a UI <code>Handler</code> running every second to calculate remaining temporary revoke minutes and update the status card dynamically (Waiting vs Active).
+    </li>
+</ol>
+
+<pre><code>// Real-time synchronization whenever the user spins the TimePicker:
+timePickerStart.setOnTimeChangedListener((view, hourOfDay, minuteOfHour) -> {
+    PrefsHelper.setStartTime(MainActivity.this, hourOfDay, minuteOfHour);
+    updateScheduleStatusDisplay();
+});</code></pre>
+
+<div class="page-break"></div>
+<h3>3.3 App Discovery & Category Filtering: <code>AppSelectActivity.java</code></h3>
+<p>
+This activity scans the device for user-launchable applications using <code>PackageManager.queryIntentActivities()</code>.
+</p>
+<ul>
+    <li><strong>Background Thread Execution:</strong> Loading application metadata and icon drawables for 100+ apps takes time. To keep the UI silky-smooth, the querying is offloaded to <code>Executors.newSingleThreadExecutor()</code> and posted back to the main thread via <code>Looper.getMainLooper()</code>.</li>
+    <li><strong>Automated Game Categorization:</strong> Uses <code>ApplicationInfo.category == ApplicationInfo.CATEGORY_GAME</code> and <code>FLAG_IS_GAME</code>. The <strong>"Select All Games"</strong> button iterates through the model list, marks all games as checked, and updates the UI instantly.</li>
+    <li><strong>Pre-Selection Logic:</strong> On initial run, if Instagram (<code>com.instagram.android</code>) or Facebook (<code>com.facebook.katana</code>) are installed, they are checked by default.</li>
+</ul>
+
+<h3>3.4 Core Monitoring Engine: <code>BlockService.java</code></h3>
+<p>
+<code>BlockService</code> is the architectural heart of FocusBlocker. It runs as a persistent Foreground Service with a 1-second background poll.
+</p>
+
+<table>
+    <tr>
+        <th>Subsystem</th>
+        <th>Implementation Detail</th>
+        <th>Why It Matters</th>
+    </tr>
+    <tr>
+        <td><strong>Service Type</strong></td>
+        <td><code>foregroundServiceType="specialUse"</code></td>
+        <td>Required by Android 14 (API 34) to avoid <code>SecurityException</code> on startup.</td>
+    </tr>
+    <tr>
+        <td><strong>Sticky Policy</strong></td>
+        <td><code>return START_STICKY;</code></td>
+        <td>Tells the OS to respawn the service if killed during low-memory events.</td>
+    </tr>
+    <tr>
+        <td><strong>Loop Mechanism</strong></td>
+        <td><code>ScheduledExecutorService</code> (1 Hz)</td>
+        <td>Lightweight, reliable background timer without battery-draining wake locks.</td>
+    </tr>
+    <tr>
+        <td><strong>Screen Awareness</strong></td>
+        <td><code>PowerManager.isInteractive()</code></td>
+        <td>Suspends activity launching when phone display is sleeping or locked.</td>
+    </tr>
+    <tr>
+        <td><strong>Safe Exclusion</strong></td>
+        <td><code>Intent.CATEGORY_HOME</code> cache</td>
+        <td>Prevents accidental blocking of home launchers and system UI.</td>
+    </tr>
+</table>
+
+<h4>Solving the Continuous In-App Usage Challenge</h4>
+<p>
+In Android, <code>UsageStatsManager.queryEvents()</code> only logs an <code>ACTIVITY_RESUMED</code> event when a window transitions from paused to resumed. If a user is already browsing Instagram for 5 minutes, <strong>zero new resume events</strong> are emitted during those 5 minutes!
+</p>
+<p>
+A naive query of the last 10 seconds would return <code>null</code>, meaning the app would fail to block unless the user closed and reopened Instagram. <strong>FocusBlocker solves this</strong> by retaining the active foreground identity across ticks in <code>currentForegroundApp</code>. When the clock strikes the block start time, <code>currentForegroundApp</code> immediately triggers <code>BlockActivity</code> over the screen right in the middle of active scrolling!
+</p>
+
+<pre><code>// Continuous Foreground App Tracking Implementation:
+private String getForegroundPackageName() {
+    UsageStatsManager usageStatsManager = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
+    if (usageStatsManager == null) return currentForegroundApp;
+
+    long endTime = System.currentTimeMillis();
+    long startTime = endTime - 15000; // Query recent window
+
+    UsageEvents events = usageStatsManager.queryEvents(startTime, endTime);
+    if (events != null) {
+        UsageEvents.Event event = new UsageEvents.Event();
+        while (events.hasNextEvent()) {
+            events.getNextEvent(event);
+            if (event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED) {
+                currentForegroundApp = event.getPackageName(); // Update state on transition
+            }
+        }
+    }
+
+    // Historical fallback for initial service startup:
+    if (currentForegroundApp == null) {
+        UsageEvents history = usageStatsManager.queryEvents(endTime - (2 * 3600 * 1000L), endTime);
+        if (history != null) {
+            UsageEvents.Event event = new UsageEvents.Event();
+            while (history.hasNextEvent()) {
+                history.getNextEvent(event);
+                if (event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED) {
+                    currentForegroundApp = event.getPackageName();
+                }
+            }
+        }
+    }
+    return currentForegroundApp;
+}</code></pre>
+
+<div class="page-break"></div>
+<h3>3.5 Blocking Screen & Bypass Interceptor: <code>BlockActivity.java</code></h3>
+<p>
+When launched, <code>BlockActivity</code> occupies the entire screen. It incorporates critical viva-worthy mechanisms:
+</p>
+<ul>
+    <li><strong>Back-Navigation Interception:</strong> Back presses are captured via <code>getOnBackPressedDispatcher().addCallback()</code> and routed to <code>Intent.CATEGORY_HOME</code>, ensuring the user cannot bypass the block using gesture navigation or the Back button.</li>
+    <li><strong>"Go Home" Button:</strong> Triggers an explicit Intent to the Android home screen launcher and finishes the activity.</li>
+    <li><strong>Temporary Revoke Protocol:</strong> Offers 5, 10, 15, or 30 minutes in a Material Spinner. Upon confirmation, it writes <code>revokeUntil = System.currentTimeMillis() + (minutes * 60 * 1000)</code> into SharedPreferences and finishes, unblocking the app until the pause period elapses.</li>
+</ul>
+
+<pre><code>// Back press override to ensure unskippable enforcement:
+getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+    @Override
+    public void handleOnBackPressed() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(homeIntent);
+        finish();
+    }
+});</code></pre>
+
+<h3>3.6 Device Reboot Interceptor: <code>BootReceiver.java</code></h3>
+<p>
+To ensure user discipline cannot be defeated by turning the device off and on, <code>BootReceiver</code> listens for <code>android.intent.action.BOOT_COMPLETED</code>.
+</p>
+<pre><code>public class BootReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            if (PrefsHelper.isBlockingEnabled(context)) {
+                Intent serviceIntent = new Intent(context, BlockService.class);
+                ContextCompat.startForegroundService(context, serviceIntent);
+            }
+        }
+    }
+}</code></pre>
+
+<!-- SECTION 4: VIVA PREPARATION -->
+<div class="page-break"></div>
+<h2>4. Oral Examination (Viva) Preparation Guide</h2>
+
+<div class="callout">
+    <div class="callout-title">Viva Question 1: What is the difference between a Started Service and a Bound Service?</div>
+    <p><strong>Answer:</strong> A <em>Started Service</em> is initiated via <code>startService()</code> or <code>startForegroundService()</code> and runs indefinitely in the background until it completes its task or is explicitly stopped via <code>stopService()</code>. A <em>Bound Service</em> offers a client-server interface initiated via <code>bindService()</code>, which lives only as long as an active client is bound to it. FocusBlocker uses a Started Foreground Service.</p>
+</div>
+
+<div class="callout">
+    <div class="callout-title">Viva Question 2: Why do we pass <code>FLAG_ACTIVITY_NEW_TASK</code> when launching <code>BlockActivity</code> from <code>BlockService</code>?</div>
+    <p><strong>Answer:</strong> In Android, activities belong to task back-stacks. Services do not possess an activity back-stack. When launching an activity from a non-activity context (such as a Service or BroadcastReceiver), Android throws a <code>RuntimeException</code> unless <code>FLAG_ACTIVITY_NEW_TASK</code> is supplied to instruct the Window Manager to create or assign a new task.</p>
+</div>
+
+<div class="callout">
+    <div class="callout-title">Viva Question 3: Why is <code>AppOpsManager</code> used instead of standard <code>checkSelfPermission</code> for Usage Stats?</div>
+    <p><strong>Answer:</strong> <code>PACKAGE_USAGE_STATS</code> is a privileged system permission that cannot be granted at runtime through the standard permissions dialog. It is governed by Android's AppOps subsystem. Thus, <code>AppOpsManager.unsafeCheckOpNoThrow()</code> must be used to query whether the user has toggled the permission in Settings.</p>
+</div>
+
+<div class="callout">
+    <div class="callout-title">Viva Question 4: How does FocusBlocker avoid draining the battery?</div>
+    <p><strong>Answer:</strong> FocusBlocker avoids battery drain by: (1) Running on a low-frequency 1-second interval without CPU wake-locks, (2) Reading <code>PowerManager.isInteractive()</code> to halt event queries when the phone screen is off, and (3) Using lightweight in-memory comparison rather than repeated disk or network I/O.</p>
+</div>
+
+<div class="callout">
+    <div class="callout-title">Viva Question 5: Why did we need <code>android:foregroundServiceType="specialUse"</code> for Android 14?</div>
+    <p><strong>Answer:</strong> Starting in Android 14 (API 34), Google introduced strict categories for Foreground Services (e.g. camera, microphone, dataSync). Apps that perform app-restriction or focus-monitoring must use <code>specialUse</code> and document their purpose in both the manifest property <code>PROPERTY_SPECIAL_USE_FGS_SUBTYPE</code> and developer console to prevent service termination.</p>
+</div>
+
+<!-- SECTION 5: INSTALLATION & TESTING -->
+<h2>5. Command-Line Build & Installation Reference</h2>
+
+<h3>Compile Debug APK:</h3>
+<pre><code>cd ~/FocusBlocker
+./gradlew assembleDebug</code></pre>
+<p>The compiled artifact is generated at: <code>app/build/outputs/apk/debug/app-debug.apk</code></p>
+
+<h3>Install to Connected Phone:</h3>
+<pre><code>adb devices
+adb install -r app/build/outputs/apk/debug/app-debug.apk</code></pre>
+
+<h3>Initial Phone Setup Checklist:</h3>
+<ol>
+    <li><strong>Usage Access:</strong> Open FocusBlocker &rarr; Tap Grant &rarr; Toggle "Allow usage tracking".</li>
+    <li><strong>Display Over Other Apps:</strong> Tap Grant &rarr; Toggle "Allow display over other apps".</li>
+    <li><strong>Notifications:</strong> Tap Grant to allow persistent monitoring notifications (Android 13+).</li>
+    <li><strong>Battery Optimization:</strong> Phone Settings &rarr; Apps &rarr; FocusBlocker &rarr; Battery &rarr; Choose <strong>Unrestricted</strong>.</li>
+</ol>
+
+<div class="footer-note">
+    FocusBlocker Project Report &bull; Compiled from Git Repository: https://github.com/anshu2k24/FocusBlocker &bull; Generated November 2026
+</div>
+
+</body>
+</html>
